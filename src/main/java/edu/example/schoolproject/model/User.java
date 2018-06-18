@@ -1,69 +1,77 @@
 package edu.example.schoolproject.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+@Entity
+@Table(name = "users")
 public class User
-{
-    private String mail;
+    implements UserDetails {
+	
+	static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "user_id", nullable = false, updatable = false)
+	private Long id;
+	
+	@Column(name = "username", nullable = false, unique = true)
+	private String username;
+	
+	@Column(name = "password", nullable = false)
+	private String password;
+	
+	@Column(name = "enabled", nullable = false)
+	private boolean enabled;
 
-    private String password;
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		
+		return authorities;
+	}
 
-    private String lastName;
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-    private String name;
+	@Override
+	public boolean isAccountNonLocked() {
+		// we never lock accounts
+		return true;
+	}
 
-    private String address;
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// credentials never expire
+		return true;
+	}
 
-    public String getMail()
-    {
-        return mail;
-    }
+	@Override
+	public boolean isEnabled() {
+		return enabled;
+	}
 
-    public User setMail( final String mail )
-    {
-        this.mail = mail;
-        return this;
-    }
+	@Override
+	public String getPassword() {
+		return password;
+	}
 
-    public String getPassword()
-    {
-        return password;
-    }
+	@Override
+	public String getUsername() {
+		return username;
+	}
 
-    public User setPassword( final String password )
-    {
-        this.password = password;
-        return this;
-    }
-
-    public String getLastName()
-    {
-        return lastName;
-    }
-
-    public User setLastName( final String lastName )
-    {
-        this.lastName = lastName;
-        return this;
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public User setName( final String name )
-    {
-        this.name = name;
-        return this;
-    }
-
-    public String getAddress()
-    {
-        return address;
-    }
-
-    public User setAddress( final String address )
-    {
-        this.address = address;
-        return this;
-    }
 }
