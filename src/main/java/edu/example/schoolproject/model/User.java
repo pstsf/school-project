@@ -20,7 +20,12 @@ public class User
     implements UserDetails {
 	
 	static final long serialVersionUID = 1L;
-	
+
+	public Long getId()
+	{
+		return id;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id", nullable = false, updatable = false)
@@ -73,5 +78,4 @@ public class User
 	public String getUsername() {
 		return username;
 	}
-
 }
