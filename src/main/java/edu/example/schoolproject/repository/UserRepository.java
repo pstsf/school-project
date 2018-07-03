@@ -1,8 +1,6 @@
 package edu.example.schoolproject.repository;
 
-import java.util.Collection;
-
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import edu.example.schoolproject.model.User;
@@ -12,7 +10,7 @@ import edu.example.schoolproject.model.User;
  */
 @Repository
 public interface UserRepository
-    extends CrudRepository<User, Long>
+    extends JpaRepository<User, Long>
 {
 	
 	/**
