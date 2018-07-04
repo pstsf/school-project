@@ -30,7 +30,7 @@ public class User
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id", nullable = false, updatable = false)
 	private Long id;
-	
+
 	@Column(name = "username", nullable = false, unique = true)
 	private String username;
 	
@@ -74,6 +74,7 @@ public class User
 		return password;
 	}
 
+	public void setPassword(String password) { this.password = password; }
 	@Override
 	public String getUsername() {
 		return username;

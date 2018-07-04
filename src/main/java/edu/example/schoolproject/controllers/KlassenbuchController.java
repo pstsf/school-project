@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.Optional;
 
+import edu.example.schoolproject.model.Klassenbuch;
+import edu.example.schoolproject.repository.KlassenbuchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,27 +19,27 @@ import edu.example.schoolproject.model.Person;
 import edu.example.schoolproject.repository.PersonRepository;
 
 @RestController
-@RequestMapping( "/people" )
-public class PersonController
+@RequestMapping( "/klassenbuch" )
+public class KlassenbuchController
 {
 
     @Autowired
-    private PersonRepository personRepo;
+    private KlassenbuchRepository klassenbuchRepo;
 
     @RequestMapping( method = RequestMethod.GET )
-    public ResponseEntity<Collection<Person>> getPeople()
+    public ResponseEntity<Collection<Klassenbuch>> getKlassenbuch()
     {
-        return new ResponseEntity<>( personRepo.findAll(), HttpStatus.OK );
+        return new ResponseEntity<>( klassenbuchRepo.findAll(), HttpStatus.OK );
     }
 
-    @RequestMapping( value = "/{username}", method = RequestMethod.GET )
-    public ResponseEntity<Person> getPerson( @PathVariable String username )
+    @RequestMapping( value = "/{id}", method = RequestMethod.GET )
+    public ResponseEntity<Klassenbuch> getKlassenbuch( @PathVariable long id )
     {
-        final Person personOptional = personRepo.findByUsername( username );
+        final Optional<Klassenbuch> klassenbuchOptional = klassenbuchRepo.findById( id );
 
-        if ( null != personOptional )
+        if ( klassenbuchOptional.isPresent() )
         {
-            return new ResponseEntity<>( personOptional, HttpStatus.OK );
+            return new ResponseEntity<>( klassenbuchOptional.get(), HttpStatus.OK );
         }
         else
         {
@@ -46,19 +48,19 @@ public class PersonController
     }
 
     @RequestMapping( method = RequestMethod.POST )
-    public ResponseEntity<?> addPerson( @RequestBody Person person )
+    public ResponseEntity<?> addKlassenbuch( @RequestBody Klassenbuch klassenbuch )
     {
-        return new ResponseEntity<>( personRepo.save( person ), HttpStatus.CREATED );
+        return new ResponseEntity<>( klassenbuchRepo.save( klassenbuch ), HttpStatus.CREATED );
     }
 
     @RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
-    public ResponseEntity<Void> deletePerson( @PathVariable long id, Principal principal )
+    public ResponseEntity<Void> deleteKlassenbuch( @PathVariable long id, Principal principal )
     {
-        Person currentPerson = personRepo.findByUsername( principal.getName() );
+        Klassenbuch currentKlassenbuch = klassenbuchRepo.findByName( principal.getName() );
 
-        if ( currentPerson.getId() == id )
+        if ( currentKlassenbuch.getId() == id )
         {
-            personRepo.deleteById( id );
+            klassenbuchRepo.deleteById( id );
             return new ResponseEntity<Void>( HttpStatus.OK );
         }
         else
