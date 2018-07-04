@@ -30,14 +30,14 @@ public class PersonController
         return new ResponseEntity<>( personRepo.findAll(), HttpStatus.OK );
     }
 
-    @RequestMapping( value = "/{id}", method = RequestMethod.GET )
-    public ResponseEntity<Person> getPerson( @PathVariable long id )
+    @RequestMapping( value = "/{username}", method = RequestMethod.GET )
+    public ResponseEntity<Person> getPerson( @PathVariable String username )
     {
-        final Optional<Person> personOptional = personRepo.findById( id );
+        final Person personOptional = personRepo.findByUsername( username );
 
-        if ( personOptional.isPresent() )
+        if ( null != personOptional )
         {
-            return new ResponseEntity<>( personOptional.get(), HttpStatus.OK );
+            return new ResponseEntity<>( personOptional, HttpStatus.OK );
         }
         else
         {

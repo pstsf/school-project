@@ -11,7 +11,8 @@ CREATE SEQUENCE hibernate_sequence START 1;
 DROP TABLE IF EXISTS person;
 CREATE TABLE person (
     person_id BIGINT PRIMARY KEY auto_increment,
-    name VARCHAR(32),
+    firstname VARCHAR(32),
+    lastname VARCHAR(32),
     username VARCHAR(128) UNIQUE REFERENCES users (username),
     birth_date DATE,
     address VARCHAR(64),
