@@ -17,7 +17,7 @@ import edu.example.schoolproject.model.Person;
 import edu.example.schoolproject.repository.PersonRepository;
 
 @RestController
-@RequestMapping( "/people" )
+@RequestMapping( "/person" )
 public class PersonController
 {
 
