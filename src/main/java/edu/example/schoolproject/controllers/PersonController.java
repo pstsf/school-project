@@ -2,7 +2,6 @@ package edu.example.schoolproject.controllers;
 
 import java.security.Principal;
 import java.util.Collection;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.example.schoolproject.model.Person;
@@ -25,19 +25,21 @@ public class PersonController
     private PersonRepository personRepo;
 
     @RequestMapping( method = RequestMethod.GET )
-    public ResponseEntity<Collection<Person>> getPeople()
+    public ResponseEntity<Collection<Person>> getPersonByNameAndAge(
+        @RequestParam( value = "id", required = false ) Long id,
+        @RequestParam( value = "name", required = false ) final String name,
+        @RequestParam( value = "age", required = false ) Integer age )
     {
-        return new ResponseEntity<>( personRepo.findAll(), HttpStatus.OK );
-    }
-
-    @RequestMapping( value = "/{id}", method = RequestMethod.GET )
-    public ResponseEntity<Person> getPerson( @PathVariable long id )
-    {
-        final Optional<Person> personOptional = personRepo.findById( id );
-
-        if ( personOptional.isPresent() )
+        if ( id == null && name == null && age == null )
         {
-            return new ResponseEntity<>( personOptional.get(), HttpStatus.OK );
+            return new ResponseEntity( personRepo.findAll(), HttpStatus.OK );
+        }
+
+        Collection<Person> person = personRepo.findByNameOrAgeOrId( name, age, id );
+
+        if ( null != person )
+        {
+            return new ResponseEntity( person, HttpStatus.OK );
         }
         else
         {

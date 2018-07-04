@@ -13,7 +13,9 @@ public interface PersonRepository
 {
 	
 	Collection<Person> findAll();
-	
+
+    Collection<Person> findByNameOrAgeOrId(String name, int age, Long id);
+
 	Person findByUsername( String username );
 
 }
