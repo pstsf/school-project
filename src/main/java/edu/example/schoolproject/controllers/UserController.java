@@ -8,6 +8,7 @@ import edu.example.schoolproject.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ public class UserController
     private UserRepository userRepo;
 
     @RequestMapping( method = RequestMethod.GET )
-    public ResponseEntity<Collection<Person>> getUser()
+    public ResponseEntity<Collection<User>> getUser()
     {
         return new ResponseEntity( userRepo.findAll(), HttpStatus.OK );
     }
@@ -49,6 +50,8 @@ public class UserController
     @RequestMapping( method = RequestMethod.POST )
     public ResponseEntity<?> addUser( @RequestBody User user )
     {
+        final String pass = user.getPassword();
+        user.setPassword( encrypt(pass) );
         return new ResponseEntity<>( userRepo.save( user ), HttpStatus.CREATED );
     }
 
@@ -66,5 +69,11 @@ public class UserController
         {
             return new ResponseEntity<>( HttpStatus.UNAUTHORIZED );
         }
+    }
+
+    public String encrypt(String pass) {
+        final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        final String password = bCryptPasswordEncoder.encode(pass);
+        return password;
     }
 }

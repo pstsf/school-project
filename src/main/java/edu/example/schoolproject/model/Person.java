@@ -6,9 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Date;
 
 @Entity
-@Table(name = "people")
+@Table(name = "person")
 public class Person
 {
 	@Id
@@ -20,7 +21,7 @@ public class Person
 	
 	private String username;
 
-	private int age;
+	private Date birthDate;
 
 	public long getId() {
 		return id;
@@ -46,11 +47,11 @@ public class Person
 		this.username = username;
 	}
 
-	public int getAge() {
-		return age;
+	public Date getBirthDate() {
+		return birthDate;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
 }
