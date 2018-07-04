@@ -15,12 +15,11 @@ CREATE TABLE users (
     user_id BIGINT PRIMARY KEY auto_increment,
     username VARCHAR(128) UNIQUE REFERENCES person (username),
     password VARCHAR(256),
-    enabled BOOL,
+    enabled BOOL
     person_id BIGINT REFERENCES person (id),
 );
 
 CREATE SEQUENCE hibernate_sequence START 1;
-
 
 
 DROP TABLE IF EXISTS role;
@@ -60,3 +59,8 @@ CREATE TABLE not_attendance(
     reason VARCHAR(32),
     klassenbuch_id BIGINT REFERENCES klassenbuch(id)
 );
+
+
+
+
+

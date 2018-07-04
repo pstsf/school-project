@@ -1,5 +1,6 @@
 package edu.example.schoolproject.repository;
 
+import edu.example.schoolproject.model.Person;
 import edu.example.schoolproject.model.Role;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

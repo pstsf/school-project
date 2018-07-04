@@ -3,17 +3,15 @@ package edu.example.schoolproject.model;
 import java.sql.Date;
 import java.util.Collection;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.sql.Date;
+import java.util.Collection;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "person")
@@ -39,6 +37,16 @@ public class Person
 
     private String town;
 
+    @ManyToMany(mappedBy = "persons")
+	private Collection<Role> roles;
+
+	@ManyToOne
+	@JoinTable(name="klassenbuch_prsn",
+			joinColumns = @JoinColumn(name="klassenbuch_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
+	private Klassenbuch klassenbuch;
+    
+    
     public String getAddress() {
         return address;
     }
