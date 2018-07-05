@@ -6,9 +6,12 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +24,7 @@ public class User
 	
 	static final long serialVersionUID = 1L;
 
-	public Long getId()
+	public long getId()
 	{
 		return id;
 	}
@@ -29,21 +32,30 @@ public class User
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id", nullable = false, updatable = false)
-	private Long id;
+	private long id;
+
+	public void setId( final long id )
+	{
+		this.id = id;
+	}
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "person_id")
+	private Person person;
 
 	@Column(name = "username", nullable = false, unique = true)
 	private String username;
-	
+
 	@Column(name = "password", nullable = false)
 	private String password;
-	
+
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		
+
 		return authorities;
 	}
 
@@ -75,16 +87,26 @@ public class User
 	}
 
 	public void setPassword(String password) { this.password = password; }
+
 	@Override
 	public String getUsername() {
 		return username;
 	}
-
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public Person getPerson()
+	{
+		return person;
+	}
+
+	public void setPerson( final Person person )
+	{
+		this.person = person;
 	}
 }

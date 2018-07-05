@@ -1,23 +1,27 @@
-DROP TABLE IF EXISTS users;
-CREATE TABLE users (
-    user_id BIGINT PRIMARY KEY auto_increment,
-    username VARCHAR(128) UNIQUE,
-    password VARCHAR(256),
-    enabled BOOL
-);
-
-CREATE SEQUENCE hibernate_sequence START 1;
-
 DROP TABLE IF EXISTS person;
 CREATE TABLE person (
     id BIGINT PRIMARY KEY auto_increment,
     name VARCHAR(32),
-    username VARCHAR(128) UNIQUE REFERENCES users (username),
+    username VARCHAR(128) UNIQUE,
     birth_date DATE,
     address VARCHAR(64),
     postal_code VARCHAR(5),
     town VARCHAR(32)
 );
+
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+    user_id BIGINT PRIMARY KEY auto_increment,
+    username VARCHAR(128) UNIQUE REFERENCES person (username),
+    password VARCHAR(256),
+    enabled BOOL,
+    person_id BIGINT REFERENCES person (id),
+);
+
+CREATE SEQUENCE hibernate_sequence START 1;
+
+
 
 DROP TABLE IF EXISTS role;
 CREATE TABLE role(

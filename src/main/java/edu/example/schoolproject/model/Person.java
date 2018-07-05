@@ -1,8 +1,19 @@
 package edu.example.schoolproject.model;
 
-import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "person")
@@ -14,6 +25,9 @@ public class Person
     private long id;
 
     private String name;
+
+    @OneToOne(mappedBy = "person")
+    private User user;
 
     private String username;
 
@@ -95,6 +109,26 @@ public class Person
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public User getUser()
+    {
+        return user;
+    }
+
+    public void setUser( final User user )
+    {
+        this.user = user;
+    }
+
+    public Date getBirth_date()
+    {
+        return birth_date;
+    }
+
+    public void setBirth_date( final Date birth_date )
+    {
+        this.birth_date = birth_date;
     }
 
     @ManyToMany(mappedBy = "persons")
