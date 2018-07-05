@@ -21,17 +21,17 @@ public class SchoolProjectApplicationTests {
 	@Autowired
 	UserController uc;
 
-	@Test
-	public void getUserTest() {
-		final ResponseEntity<Collection<User>> user = uc.getUser();
-		Assert.assertEquals(200, user.getStatusCode());
-	}
+	//@Test
+	//public void getUserTest() {
+	//	final ResponseEntity<Collection<User>> user = uc.getUser();
+	//	Assert.assertEquals(200, user.getStatusCode());
+	//}
 
-	@Test
-	public void getUserByIdTest() {
-		final ResponseEntity<User> user = uc.getUser (2);
-		Assert.assertEquals(user.getStatusCode(), uc.getUser (2).getStatusCode());
-	}
+	//@Test
+	//public void getUserByIdTest() {
+	//	final ResponseEntity<User> user = uc.getUser (2);
+	//	Assert.assertEquals(user.getStatusCode(), uc.getUser (2).getStatusCode());
+	//}
 
 	@Test
 	public void addUserTest() {
