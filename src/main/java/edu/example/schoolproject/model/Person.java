@@ -1,44 +1,61 @@
 package edu.example.schoolproject.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collection;
 
 @Entity
 @Table(name = "person")
-public class Person {
+public class Person
+{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "person_id")
+    @Column(name = "id")
     private long id;
 
-    @Column(name = "firstname")
-    private String firstName;
+    private String name;
 
-    @Column(name = "lastname")
-    private String lastName;
-
-    @Column(name = "username", unique = true)
     private String username;
 
-    @Column(name = "birth_date")
-    private Date birthDate;
-
-    @Column(name = "address")
     private String address;
 
-    @Column(name = "postal_code")
-    private String postalCode;
+    private Date birth_date;
 
-    @Column(name = "town")
+    private String postal_code;
+
     private String town;
 
-    @Column(name = "role")
-    private String role;
+    public String getAddress() {
+        return address;
+    }
+
+    public Date getDate() {
+        return birth_date;
+    }
+
+    public String getPostal_code() {
+        return postal_code;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setDate(Date date) {
+        this.birth_date = date;
+    }
+
+    public void setPostal_code(String postal_code) {
+        this.postal_code = postal_code;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
 
     public long getId() {
         return id;
@@ -48,20 +65,12 @@ public class Person {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUsername() {
@@ -72,45 +81,28 @@ public class Person {
         this.username = username;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public Klassenbuch getKlassenbuch() {
+        return klassenbuch;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setKlassenbuch(Klassenbuch klassenbuch) {
+        this.klassenbuch = klassenbuch;
     }
 
-    public String getAddress() {
-        return address;
+    public Collection<Role> getRoles() {
+        return roles;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 
-    public String getPostalCode() {
-        return postalCode;
-    }
+    @ManyToMany(mappedBy = "persons")
+    private Collection<Role> roles;
 
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public String getTown() {
-        return town;
-    }
-
-    public void setTown(String town) {
-        this.town = town;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-
+    @ManyToOne
+    @JoinTable(name="klassenbuch_prsn",
+            joinColumns = @JoinColumn(name="klassenbuch_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
+    private Klassenbuch klassenbuch;
 }

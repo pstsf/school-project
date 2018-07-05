@@ -14,5 +14,5 @@ public interface KlassenbuchRepository
 
     Klassenbuch findById( int id );
 
-    Klassenbuch findByName( String name );
+    Klassenbuch findByKlassenName ( String name );
 }

@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.example.schoolproject.model.Person;
-import edu.example.schoolproject.repository.PersonRepository;
 
 @RestController
 @RequestMapping( "/klassenbuch" )
@@ -56,7 +54,7 @@ public class KlassenbuchController
     @RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
     public ResponseEntity<Void> deleteKlassenbuch( @PathVariable long id, Principal principal )
     {
-        Klassenbuch currentKlassenbuch = klassenbuchRepo.findByName( principal.getName() );
+        Klassenbuch currentKlassenbuch = klassenbuchRepo.findByKlassenName( principal.getName() );
 
         if ( currentKlassenbuch.getId() == id )
         {

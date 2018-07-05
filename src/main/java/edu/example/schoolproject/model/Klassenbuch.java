@@ -1,72 +1,98 @@
 package edu.example.schoolproject.model;
 
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.sql.Date;
-import java.util.List;
-
 import javax.persistence.*;
-
-import org.springframework.security.core.GrantedAuthority;
-
+import java.sql.Date;
+import java.util.Collection;
 
 @Entity
 @Table(name = "klassenbuch")
-public class Klassenbuch {
 
+public class Klassenbuch {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "klassenbuch_id", nullable = false, updatable = false)
-    private Long id;
+    @Column(name = "id")
 
-    @Column(name = "klassen_stufe", nullable = false, unique = false)
-    private int klassenStufe;
-
-    @Column(name = "klassen_zusatz", nullable = false, unique = false)
-    private String zusatz;
-
-    @Column(name = "klassen_name", nullable = false, unique = false)
-    private String name;
-
-    @Column(name = "period_start", nullable = false, unique = false)
-    private Date yearFrom;
-
-    @Column(name = "period_end", nullable = false, unique = false)
-    private Date yearTo;
-
-    @Column(name = "archived", nullable = false, unique = false)
+    private long id;
+    private int klassen_stufe;
+    private String klassenName;
+    private String klassen_zusatz;
+    private Date period_start;
+    private Date period_end;
     private boolean archived;
+    private long owner_id;
 
-    @Column(name = "owner_id", nullable = false, unique = false)
-    private long ownerName;
+    public void setId(long klassen_id) {
+        this.id = klassen_id;
+    }
 
-    public long getId() { return id; }
+    public void setKlassen_stufe(int klassen_stufe) {
+        this.klassen_stufe = klassen_stufe;
+    }
 
-    public void setId(long id) { this.id = id; }
+    public void setKlassen_name(String klassen_name) {
+        this.klassenName = klassen_name;
+    }
 
-    public int getKlassenStufe() { return klassenStufe; }
+    public long getId() {
+        return id;
+    }
 
-    public void setKlassenStufe(int klassenStufe) { this.klassenStufe = klassenStufe; }
+    public int getKlassen_stufe() {
+        return klassen_stufe;
+    }
 
-    public String getZusatz() { return zusatz; }
+    public String getKlassen_name() {
+        return klassenName;
+    }
 
-    public void setZusatz(String zusatz) { this.zusatz = zusatz; }
+    public void setKlassen_zusatz(String zusatz) {
+        this.klassen_zusatz = zusatz;
+    }
 
-    public String getName() { return name; }
+    public void setPeriod_start(Date period_begin) {
+        this.period_start = period_begin;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setPeriod_end(Date period_end) {
+        this.period_end = period_end;
+    }
 
-    public Date getYearFrom() { return yearFrom; }
+    public void setArchived(boolean archived) {
+        this.archived = archived;
+    }
 
-    public void setYearFrom(Date yearFrom) { this.yearFrom = yearFrom; }
+    public void setOwner_id(long owner_id) {
+        this.owner_id = owner_id;
+    }
 
-    public Date getYearTo() { return yearTo; }
+    public String getZusatz() {
+        return klassen_zusatz;
+    }
 
-    public void setYearTo(Date yearTo) { this.yearTo = yearTo; }
+    public Date getPeriod_start() {
+        return period_start;
+    }
 
-    public long getOwnerName() { return ownerName; }
+    public Date getPeriod_end() {
+        return period_end;
+    }
 
-    public void setOwnerName(long ownerName) { this.ownerName = ownerName; }
-}
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public long getOwner_id() {
+        return owner_id;
+    }
+
+    @OneToMany(mappedBy = "klassenbuch")
+    private Collection<Person> students;
+
+    public Collection<Person> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Collection<Person> students) {
+        this.students = students;
+    }
+};

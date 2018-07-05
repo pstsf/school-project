@@ -17,7 +17,7 @@ import edu.example.schoolproject.model.Person;
 import edu.example.schoolproject.repository.PersonRepository;
 
 @RestController
-@RequestMapping( "/people" )
+@RequestMapping( "/person" )
 public class PersonController
 {
 
@@ -52,18 +52,11 @@ public class PersonController
     }
 
     @RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
-    public ResponseEntity<Void> deletePerson( @PathVariable long id, Principal principal )
+    public ResponseEntity<Void> deletePerson( @PathVariable long id )
     {
-        Person currentPerson = personRepo.findByUsername( principal.getName() );
 
-        if ( currentPerson.getId() == id )
-        {
             personRepo.deleteById( id );
             return new ResponseEntity<Void>( HttpStatus.OK );
-        }
-        else
-        {
-            return new ResponseEntity<Void>( HttpStatus.UNAUTHORIZED );
-        }
+
     }
 }

@@ -48,7 +48,7 @@ public class UserController
     }
 
     @RequestMapping( method = RequestMethod.POST )
-    public ResponseEntity<?> addUser( @RequestBody User user )
+    public ResponseEntity<User> addUser( @RequestBody User user )
     {
         final String pass = user.getPassword();
         user.setPassword( encrypt(pass) );
