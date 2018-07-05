@@ -147,4 +147,7 @@ public class Person
             joinColumns = @JoinColumn(name="klassenbuch_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
     private Klassenbuch klassenbuch;
+
+	@OneToMany(mappedBy="person")
+	private Collection<MissingAttendance> missing;
 }
