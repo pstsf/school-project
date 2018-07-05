@@ -95,4 +95,7 @@ public class Klassenbuch {
     public void setStudents(Collection<Person> students) {
         this.students = students;
     }
+
+    @OneToMany(mappedBy ="klassenbuch")
+    private Collection<MissingAttendance> missing;
 };

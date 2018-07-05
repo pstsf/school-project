@@ -31,14 +31,6 @@ CREATE TABLE role_person(
     role_id BIGINT REFERENCES role(id),
 );
 
-DROP TABLE IF EXISTS not_attendance;
-CREATE TABLE not_attendance(
-    person_id BIGINT REFERENCES person(id),
-    date DATE,
-    reason VARCHAR(32),
-    klassenbuch_id BIGINT REFERENCES klassenbuch(id)
-);
-
 DROP TABLE IF EXISTS klassenbuch;
 CREATE TABLE klassenbuch(
     id BIGINT PRIMARY KEY auto_increment,
@@ -49,6 +41,24 @@ CREATE TABLE klassenbuch(
     period_end DATE,
     archived BOOLEAN,
     owner_id BIGINT REFERENCES person(id)
+);
+DROP TABLE IF EXISTS not_attendance;
+CREATE TABLE not_attendance(
+    id BIGINT PRIMARY KEY auto_increment,
+    date DATE,
+    reason VARCHAR(32)
+);
+
+DROP TABLE IF EXISTS attendance_person;
+CREATE TABLE attendance_person(
+    na_id BIGINT REFERENCES not_attendance(id),
+    person_id BIGINT REFERENCES person(id)
+);
+
+DROP TABLE IF EXISTS attendance_klassenbuch;
+CREATE TABLE attendance_klassenbuch(
+    na_id BIGINT REFERENCES not_attendance(id),
+    kb_id BIGINT REFERENCES klassenbuch(id),
 );
 
 DROP TABLE IF EXISTS klassenbuch_prsn;
