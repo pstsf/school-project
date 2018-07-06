@@ -32,4 +32,8 @@ docker-compose up -d
 cd school-project
 git status
 git checkout -b implement.user.search 
+
+### Git
+
+By merge conflict google how to resolve, for example with kdiff3
  
