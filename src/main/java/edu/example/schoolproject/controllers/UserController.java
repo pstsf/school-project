@@ -50,25 +50,15 @@ public class UserController
     @RequestMapping( method = RequestMethod.POST )
     public ResponseEntity<User> addUser( @RequestBody User user )
     {
-        final String pass = user.getPassword();
-        user.setPassword( encrypt(pass) );
+        //final String pass = user.getPassword();
+        //user.setPassword( encrypt(pass) );
         return new ResponseEntity<>( userRepo.save( user ), HttpStatus.CREATED );
     }
 
     @RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
-    public ResponseEntity<Void> deleteUser( @PathVariable long id, Principal principal )
-    {
-        User currentUser = userRepo.findOneByUsername( principal.getName() );
-
-        if ( currentUser.getId() == id )
-        {
-            userRepo.deleteById( id );
-            return new ResponseEntity<>( HttpStatus.OK );
-        }
-        else
-        {
-            return new ResponseEntity<>( HttpStatus.UNAUTHORIZED );
-        }
+    public ResponseEntity<Void> deleteUser( @PathVariable long id ) {
+        userRepo.deleteById( id );
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public String encrypt(String pass) {

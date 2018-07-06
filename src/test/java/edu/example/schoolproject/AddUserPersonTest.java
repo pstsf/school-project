@@ -1,11 +1,10 @@
-
 package edu.example.schoolproject;
 
-import java.util.Collection;
+import javax.transaction.Transactional;
 
 import edu.example.schoolproject.controllers.UserController;
+import org.junit.Assert;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +18,10 @@ import edu.example.schoolproject.model.User;
 import edu.example.schoolproject.repository.PersonRepository;
 import edu.example.schoolproject.repository.UserRepository;
 
-import javax.transaction.Transactional;
-
-@RunWith(SpringRunner.class)
+@RunWith( SpringRunner.class )
 @SpringBootTest
-public class PersonTests {
+public class AddUserPersonTest
+{
 
     @Autowired
     PersonController pc;
@@ -40,12 +38,12 @@ public class PersonTests {
     @Autowired
     PersonRepository personRepository;
 
-    private Person person1 = new Person();
-    private Person person2;
-    private User user;
+    Person person1 = new Person();
 
-    @Before
-    public void setUp() throws Exception {
+    @Test
+    @Transactional
+    public void addPersonTest()
+    {
         final String username = "asdfjkl";
 
         person1.setName( "Klaus Kleber" );
@@ -54,30 +52,26 @@ public class PersonTests {
         person1.setAddress( "Lebertranweg 4" );
         person1.setTown( "Kleinbüttlingen" );
         person1.setPostal_code( "12345" );
-        personRepository.save( person1 );
+        pc.addPerson( person1 );
 
         User user = new User();
         user.setUsername( username );
         user.setPassword( "qwrt" );
         user.setPerson( person1 );
-        userRepository.save( user );
+        uc.addUser( user );
         person1.setUser( user );
-    }
-
-    @Test
-    public void getPeopleTest() {
-        ResponseEntity<Collection<Person>> prsn = pc.getPeople();
-    }
-
-    @Test
-    public void getPersonTest() {
-        ResponseEntity<Person> prsn = pc.getPerson( person1.getUsername() );
+        final User theOneUser = userRepository.getOne( user.getId() );
+        final Person theOnePerson = personRepository.findByUsername( username );
+        Assert.assertEquals( theOneUser.getId(), theOnePerson.getUser()
+                                                             .getId() );
+        Assert.assertEquals( theOnePerson.getId(), theOneUser.getPerson()
+                                                             .getId() );
     }
 
     @After
     @Transactional
-    public void tearDown() throws Exception {
-        ResponseEntity<Void> del1 = uc.deleteUser(person1.getUser().getId());
-        ResponseEntity<Void> del2 = pc.deletePerson(person1.getUsername());
+    public void tearDown() {
+        ResponseEntity<Void> del1 = uc.deleteUser( person1.getUser().getId() );
+        ResponseEntity<Void> del2 = pc.deletePerson( person1.getUsername() );
     }
 }

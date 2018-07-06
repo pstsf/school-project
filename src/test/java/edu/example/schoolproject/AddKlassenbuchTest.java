@@ -1,12 +1,13 @@
-package edu.example.schoolproject;
+package edu.example.schoolproject.controllers;
 
-import javax.transaction.Transactional;
-
-import org.junit.Assert;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
+import edu.example.schoolproject.model.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import edu.example.schoolproject.controllers.PersonController;
@@ -15,31 +16,39 @@ import edu.example.schoolproject.model.User;
 import edu.example.schoolproject.repository.PersonRepository;
 import edu.example.schoolproject.repository.UserRepository;
 
-@RunWith( SpringRunner.class )
+import javax.transaction.Transactional;
+import java.util.Collection;
+
+import static org.junit.Assert.*;
+
+@RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserPersonTest
-{
+public class AddKlassenbuchTest {
+
+    @Autowired
+    UserController uc;
 
     @Autowired
     PersonController pc;
 
     @Autowired
-    PersonRepository personRepo;
-
-    @Autowired
-    UserRepository userRepository;
+    KlassenbuchController kbc;
 
     @Autowired
     PersonRepository personRepository;
 
-    @Test
-    @Transactional
-    public void addPersonTest()
-    {
+    @Autowired
+    UserRepository userRepository;
+
+
+    private Person person1 = new Person();
+    private Klassenbuch kbI = new Klassenbuch();
+    private User user = new User();
+
+    @Before
+    public void setUp() throws Exception {
         final String username = "asdfjkl";
 
-        //User one = userRepository.getOne(user.getId());
-        Person person1 = new Person();
         person1.setName( "Klaus Kleber" );
         person1.setUsername( username );
         person1.setDate( new java.sql.Date( 1999 ) );
@@ -47,20 +56,25 @@ public class UserPersonTest
         person1.setTown( "Kleinbüttlingen" );
         person1.setPostal_code( "12345" );
         personRepository.save( person1 );
-        //pc.addPerson(person1);
 
-        User user = new User();
         user.setUsername( username );
         user.setPassword( "qwrt" );
         user.setPerson( person1 );
         userRepository.save( user );
         person1.setUser( user );
-        final User theOneUser = userRepository.getOne( user.getId() );
-        final Person theOnePerson = personRepository.findByUsername( username );
-        Assert.assertEquals( theOneUser.getId(), theOnePerson.getUser()
-                                                             .getId() );
-        Assert.assertEquals( theOnePerson.getId(), theOneUser.getPerson()
-                                                             .getId() );
     }
 
+    @Test
+    public void addKlassenbuchTest() {
+        kbI.setOwner_id(person1.getId());
+        kbc.addKlassenbuch(kbI);
+    }
+
+    @After
+    @Transactional
+    public void tearDown() throws Exception {
+        ResponseEntity<Void> del3 = kbc.deleteKlassenbuch(kbI.getId());
+        ResponseEntity<Void> del1 = uc.deleteUser(user.getId());
+        ResponseEntity<Void> del2 = pc.deletePerson(person1.getUsername());
+    }
 }

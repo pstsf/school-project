@@ -17,46 +17,39 @@ import edu.example.schoolproject.model.Person;
 import edu.example.schoolproject.repository.PersonRepository;
 
 @RestController
-@RequestMapping( "/person" )
-public class PersonController
-{
+@RequestMapping("/person")
+public class PersonController {
 
     @Autowired
     private PersonRepository personRepo;
 
-    @RequestMapping( method = RequestMethod.GET )
-    public ResponseEntity<Collection<Person>> getPeople()
-    {
-        return new ResponseEntity<>( personRepo.findAll(), HttpStatus.OK );
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<Collection<Person>> getPeople() {
+        return new ResponseEntity<>(personRepo.findAll(), HttpStatus.OK);
     }
 
-    @RequestMapping( value = "/{username}", method = RequestMethod.GET )
-    public ResponseEntity<Person> getPerson( @PathVariable String username )
-    {
-        final Person personOptional = personRepo.findByUsername( username );
+    @RequestMapping(value = "/{username}", method = RequestMethod.GET)
+    public ResponseEntity<Person> getPerson(@PathVariable String username) {
+        final Person personOptional = personRepo.findByUsername(username);
 
-        if ( null != personOptional )
-        {
-            return new ResponseEntity<>( personOptional, HttpStatus.OK );
-        }
-        else
-        {
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND );
+        if (null != personOptional) {
+            return new ResponseEntity<>(personOptional, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @RequestMapping( method = RequestMethod.POST )
-    public ResponseEntity<?> addPerson( @RequestBody Person person )
-    {
-        return new ResponseEntity<>( personRepo.save( person ), HttpStatus.CREATED );
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<?> addPerson(@RequestBody Person person) {
+        return new ResponseEntity<>(personRepo.save(person), HttpStatus.CREATED);
     }
 
-    @RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
-    public ResponseEntity<Void> deletePerson( @PathVariable long id )
-    {
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deletePerson(@PathVariable String username) {
+        Person byUsername = personRepo.findByUsername(username);
 
-            personRepo.deleteById( id );
-            return new ResponseEntity<Void>( HttpStatus.OK );
+        personRepo.delete(byUsername);
+        return new ResponseEntity<Void>(HttpStatus.OK);
 
     }
 }

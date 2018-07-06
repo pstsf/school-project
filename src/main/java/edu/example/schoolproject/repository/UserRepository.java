@@ -21,4 +21,6 @@ public interface UserRepository
 	 */
 	User findOneByUsername( String username );
 
+	User deleteByUsername( String username );
+
 }

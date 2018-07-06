@@ -1,9 +1,11 @@
-
 package edu.example.schoolproject;
 
-import java.util.Collection;
-
+import edu.example.schoolproject.controllers.PersonController;
 import edu.example.schoolproject.controllers.UserController;
+import edu.example.schoolproject.model.Person;
+import edu.example.schoolproject.model.User;
+import edu.example.schoolproject.repository.PersonRepository;
+import edu.example.schoolproject.repository.UserRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,17 +15,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import edu.example.schoolproject.controllers.PersonController;
-import edu.example.schoolproject.model.Person;
-import edu.example.schoolproject.model.User;
-import edu.example.schoolproject.repository.PersonRepository;
-import edu.example.schoolproject.repository.UserRepository;
-
 import javax.transaction.Transactional;
+import java.util.Collection;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class PersonTests {
+public class UserTests {
 
     @Autowired
     PersonController pc;
@@ -32,17 +29,13 @@ public class PersonTests {
     UserController uc;
 
     @Autowired
-    PersonRepository personRepo;
-
-    @Autowired
     UserRepository userRepository;
 
     @Autowired
     PersonRepository personRepository;
 
     private Person person1 = new Person();
-    private Person person2;
-    private User user;
+    private User user = new User();
 
     @Before
     public void setUp() throws Exception {
@@ -56,7 +49,6 @@ public class PersonTests {
         person1.setPostal_code( "12345" );
         personRepository.save( person1 );
 
-        User user = new User();
         user.setUsername( username );
         user.setPassword( "qwrt" );
         user.setPerson( person1 );
@@ -65,19 +57,19 @@ public class PersonTests {
     }
 
     @Test
-    public void getPeopleTest() {
-        ResponseEntity<Collection<Person>> prsn = pc.getPeople();
+    public void getUsersTest() {
+        ResponseEntity<Collection<User>> usr = uc.getUser();
     }
 
     @Test
-    public void getPersonTest() {
-        ResponseEntity<Person> prsn = pc.getPerson( person1.getUsername() );
+    public void getUserTest() {
+        ResponseEntity<User> usr = uc.getUser( user.getId() );
     }
 
     @After
     @Transactional
     public void tearDown() throws Exception {
-        ResponseEntity<Void> del1 = uc.deleteUser(person1.getUser().getId());
+        ResponseEntity<Void> del1 = uc.deleteUser(user.getId());
         ResponseEntity<Void> del2 = pc.deletePerson(person1.getUsername());
     }
 }

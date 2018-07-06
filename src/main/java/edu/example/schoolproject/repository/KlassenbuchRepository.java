@@ -6,7 +6,7 @@ import edu.example.schoolproject.model.Klassenbuch;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository(value = "kbRepo")
 public interface KlassenbuchRepository
         extends CrudRepository<Klassenbuch, Long>
 {
