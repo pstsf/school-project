@@ -38,6 +38,7 @@ git checkout -b implement.user.search
 * By merge conflict google how to resolve, for example with kdiff3
 * To create a new branch based on the branch which is current: git checkout -b new.branch
 * To add changes to the local git staging: git add . -A
+* To commit staged stuff: git commit -m"My Message"
 * To stash changes: git stash
 * To reapply stashed changes to the current branch: git stash apply
 * To switch to existing branch git checkout branch.name
