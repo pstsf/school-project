@@ -46,7 +46,7 @@ public class UserTests {
         person1.setDate( new java.sql.Date( 1999 ) );
         person1.setAddress( "Lebertranweg 4" );
         person1.setTown( "Kleinbüttlingen" );
-        person1.setPostal_code( "12345" );
+        person1.setPostalCode( "12345" );
         personRepository.save( person1 );
 
         user.setUsername( username );

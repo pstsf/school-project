@@ -1,8 +1,6 @@
 package edu.example.schoolproject.controllers;
 
-import java.security.Principal;
 import java.util.Collection;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,9 +37,24 @@ public class PersonController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> addPerson(@RequestBody Person person) {
         return new ResponseEntity<>(personRepo.save(person), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<?> updatePerson(@RequestBody Person person) {
+        long id = person.getId();
+        Person person1 = personRepo.getById(id);
+        person1.setPostalCode(person.getPostalCode());
+        person1.setTown(person.getTown());
+        person1.setAddress(person.getAddress());
+        person1.setDate(person.getDate());
+        person1.setUsername(person.getUsername());
+        person1.setUser(person.getUser());
+        person1.setName(person.getName());
+        person1.setBirthDate(person.getBirthDate());
+        return new ResponseEntity<>(personRepo.save(person1), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

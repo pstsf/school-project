@@ -51,7 +51,7 @@ public class AddUserPersonTest
         person1.setDate( new java.sql.Date( 1999 ) );
         person1.setAddress( "Lebertranweg 4" );
         person1.setTown( "Kleinbüttlingen" );
-        person1.setPostal_code( "12345" );
+        person1.setPostalCode( "12345" );
         pc.addPerson( person1 );
 
         User user = new User();

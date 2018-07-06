@@ -33,9 +33,9 @@ public class Person
 
     private String address;
 
-    private Date birth_date;
+    private Date birthDate;
 
-    private String postal_code;
+    private String postalCode;
 
     private String town;
 
@@ -44,11 +44,11 @@ public class Person
     }
 
     public Date getDate() {
-        return birth_date;
+        return birthDate;
     }
 
-    public String getPostal_code() {
-        return postal_code;
+    public String getPostalCode() {
+        return postalCode;
     }
 
     public String getTown() {
@@ -60,11 +60,11 @@ public class Person
     }
 
     public void setDate(Date date) {
-        this.birth_date = date;
+        this.birthDate = date;
     }
 
-    public void setPostal_code(String postal_code) {
-        this.postal_code = postal_code;
+    public void setPostalCode(String postal_code) {
+        this.postalCode = postal_code;
     }
 
     public void setTown(String town) {
@@ -121,14 +121,14 @@ public class Person
         this.user = user;
     }
 
-    public Date getBirth_date()
+    public Date getBirthDate()
     {
-        return birth_date;
+        return birthDate;
     }
 
-    public void setBirth_date( final Date birth_date )
+    public void setBirthDate(final Date birthDate)
     {
-        this.birth_date = birth_date;
+        this.birthDate = birthDate;
     }
 
     @ManyToMany(mappedBy = "persons")

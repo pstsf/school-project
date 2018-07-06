@@ -1,6 +1,5 @@
 package edu.example.schoolproject.controllers;
 
-import com.sun.xml.internal.bind.v2.schemagen.episode.Klass;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import edu.example.schoolproject.model.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import edu.example.schoolproject.controllers.PersonController;
 import edu.example.schoolproject.model.Person;
 import edu.example.schoolproject.model.User;
 import edu.example.schoolproject.repository.PersonRepository;
@@ -19,8 +17,6 @@ import edu.example.schoolproject.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -55,7 +51,7 @@ public class KlassenbuchControllerTest {
         person1.setDate( new java.sql.Date( 1999 ) );
         person1.setAddress( "Lebertranweg 4" );
         person1.setTown( "Kleinbüttlingen" );
-        person1.setPostal_code( "12345" );
+        person1.setPostalCode( "12345" );
         personRepository.save( person1 );
 
         user.setUsername( username );

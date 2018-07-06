@@ -15,8 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.transaction.Transactional;
 import java.util.Collection;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RoleControllerTest {
@@ -49,7 +47,7 @@ public class RoleControllerTest {
         person1.setDate( new java.sql.Date( 1999 ) );
         person1.setAddress( "Lebertranweg 4" );
         person1.setTown( "Kleinbüttlingen" );
-        person1.setPostal_code( "12345" );
+        person1.setPostalCode( "12345" );
         personRepository.save( person1 );
 
         user.setUsername( username );

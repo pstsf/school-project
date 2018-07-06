@@ -41,22 +41,16 @@ public class PersonTests {
     PersonRepository personRepository;
 
     private Person person1 = new Person();
-    private Person person2;
-    private User user;
+    private Person person2 = new Person();
+    private User user = new User();
 
     @Before
     public void setUp() throws Exception {
         final String username = "asdfjkl";
 
-        person1.setName( "Klaus Kleber" );
-        person1.setUsername( username );
-        person1.setDate( new java.sql.Date( 1999 ) );
-        person1.setAddress( "Lebertranweg 4" );
-        person1.setTown( "Kleinbüttlingen" );
-        person1.setPostal_code( "12345" );
+        person1.setUsername(username);
         personRepository.save( person1 );
 
-        User user = new User();
         user.setUsername( username );
         user.setPassword( "qwrt" );
         user.setPerson( person1 );
@@ -74,10 +68,19 @@ public class PersonTests {
         ResponseEntity<Person> prsn = pc.getPerson( person1.getUsername() );
     }
 
+    @Test
+    public void updatePersonTest() {
+        personRepo.save(person2);
+        person2.setId(person1.getId());
+        person2.setUsername((person1.getUsername()));
+        person2.setUser(person1.getUser());
+        pc.updatePerson(person2);
+    }
+
     @After
     @Transactional
     public void tearDown() throws Exception {
-        ResponseEntity<Void> del1 = uc.deleteUser(person1.getUser().getId());
+        ResponseEntity<Void> del1 = uc.deleteUser(user.getId());
         ResponseEntity<Void> del2 = pc.deletePerson(person1.getUsername());
     }
 }

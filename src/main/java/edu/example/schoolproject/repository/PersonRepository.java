@@ -16,4 +16,6 @@ public interface PersonRepository
 	
 	Person findByUsername( String username );
 
+	Person getById( long id );
+
 }
