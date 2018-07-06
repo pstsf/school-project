@@ -47,19 +47,10 @@ public class RoleController {
     }
 
     @RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
-    public ResponseEntity<Void> deleteRole( @PathVariable long id, Principal principal )
+    public ResponseEntity<Void> deleteRole( @PathVariable long id)
     {
-        Role currentRole = roleRepo.findByName( principal.getName() );
-
-        if ( currentRole.getId() == id )
-        {
-            roleRepo.deleteById( id );
-            return new ResponseEntity<Void>( HttpStatus.OK );
-        }
-        else
-        {
-            return new ResponseEntity<Void>( HttpStatus.UNAUTHORIZED );
-        }
+        roleRepo.deleteById( id );
+        return new ResponseEntity<Void>( HttpStatus.OK );
     }
 
 }
