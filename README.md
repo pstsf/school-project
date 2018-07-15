@@ -33,6 +33,10 @@ cd school-project
 git status
 git checkout -b implement.user.search 
 
+#### Recreate Database
+docker-compose down
+docker-compose up
+
 ### Git
 
 * By merge conflict google how to resolve, for example with kdiff3
