@@ -1,6 +1,8 @@
 package edu.example.schoolproject.controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 
 import edu.example.schoolproject.model.Klassenbuch;
@@ -25,6 +27,13 @@ public class PersonController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Collection<Person>> getPeople(@RequestParam Map<String,String> requestParams) {
+        String username=requestParams.get("username");
+        if(username!=null&&!username.equals("")) {
+            ArrayList<Person> temp=new ArrayList<Person>();
+            temp.add(personRepo.findByUsername(username));
+            return new ResponseEntity<>(temp, HttpStatus.OK);
+        }
+
         String search=requestParams.get("search");
         if(search!=null&&!search.equals("")) {
             return new ResponseEntity<>(personRepo.findByUsernameIgnoreCaseContaining(search), HttpStatus.OK);
@@ -32,7 +41,7 @@ public class PersonController {
         return new ResponseEntity<>(personRepo.findAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{username}", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/{username}", method = RequestMethod.GET)
     public ResponseEntity<Person> getPerson(@PathVariable String username) {
         final Person personOptional = personRepo.findByUsername(username);
 
@@ -41,7 +50,7 @@ public class PersonController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
+    }*/
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addPerson(@RequestBody Person person) {

@@ -56,10 +56,15 @@ public class UserController
     {
         final String pass = user.getPassword();
         user.setPassword( encrypt(pass) );
+        Person person=personRepo.findByUsername(user.getUsername());
 
-        user.setPerson(personRepo.findByUsername(user.getUsername()));
+        user.setPerson(person);
 
-        return new ResponseEntity<>( userRepo.save( user ), HttpStatus.CREATED );
+        User output=userRepo.save( user );
+        person.setUser(user);
+
+
+        return new ResponseEntity<>( output, HttpStatus.CREATED );
     }
 
     @RequestMapping( value = "/{id}", method = RequestMethod.DELETE )

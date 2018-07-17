@@ -15,7 +15,7 @@ public interface PersonRepository
 {
 	
 	Collection<Person> findAll();
-	
+
 	Person findByUsername( String username );
 
 	Collection<Person> findByUsernameIgnoreCaseContaining( String username );
