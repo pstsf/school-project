@@ -1,11 +1,14 @@
 package edu.example.schoolproject.repository;
 
+import edu.example.schoolproject.model.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import edu.example.schoolproject.model.User;
+
+import java.util.Collection;
 
 /**
  * Access to the user data. JpaRepository grants us convenient access methods here.
@@ -22,8 +25,10 @@ public interface UserRepository
      */
     User findOneByUsername(String username);
 
-    @Query("SELECT * FROM users u where u.username = :username")
-    User searchUserByUsername(@Param("username") String username);
+    //@Query("SELECT * FROM users u where u.username = :username")
+    //User searchUserByUsername(@Param("username") String username);
+
+    Collection<User> findByUsernameIgnoreCaseContaining(String username );
 
     User deleteByUsername( String username );
 
