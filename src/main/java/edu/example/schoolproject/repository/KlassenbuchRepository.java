@@ -3,10 +3,11 @@ package edu.example.schoolproject.repository;
 import java.util.Collection;
 
 import edu.example.schoolproject.model.Klassenbuch;
+import edu.example.schoolproject.model.Person;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository(value = "kbRepo")
 public interface KlassenbuchRepository
         extends CrudRepository<Klassenbuch, Long>
 {
@@ -14,5 +15,7 @@ public interface KlassenbuchRepository
 
     Klassenbuch findById( int id );
 
-    Klassenbuch findByName( String name );
+    Klassenbuch findByKlassenName ( String nawme );
+
+    Collection<Person> findByKlassenNameIgnoreCaseContaining(String search );
 }

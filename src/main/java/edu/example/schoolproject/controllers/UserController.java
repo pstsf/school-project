@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import edu.example.schoolproject.model.User;
+import edu.example.schoolproject.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,9 @@ public class UserController
 
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private PersonRepository personRepo;
 
     @RequestMapping( method = RequestMethod.GET )
     public ResponseEntity<Collection<User>> getUser()
@@ -48,27 +52,20 @@ public class UserController
     }
 
     @RequestMapping( method = RequestMethod.POST )
-    public ResponseEntity<?> addUser( @RequestBody User user )
+    public ResponseEntity<User> addUser( @RequestBody User user )
     {
         final String pass = user.getPassword();
         user.setPassword( encrypt(pass) );
+
+        user.setPerson(personRepo.findByUsername(user.getUsername()));
+
         return new ResponseEntity<>( userRepo.save( user ), HttpStatus.CREATED );
     }
 
     @RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
-    public ResponseEntity<Void> deleteUser( @PathVariable long id, Principal principal )
-    {
-        User currentUser = userRepo.findOneByUsername( principal.getName() );
-
-        if ( currentUser.getId() == id )
-        {
-            userRepo.deleteById( id );
-            return new ResponseEntity<>( HttpStatus.OK );
-        }
-        else
-        {
-            return new ResponseEntity<>( HttpStatus.UNAUTHORIZED );
-        }
+    public ResponseEntity<Void> deleteUser( @PathVariable long id ) {
+        userRepo.deleteById( id );
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public String encrypt(String pass) {

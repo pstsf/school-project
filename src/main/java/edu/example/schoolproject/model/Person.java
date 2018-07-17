@@ -1,44 +1,93 @@
 package edu.example.schoolproject.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.sql.Date;
+import java.util.Collection;
+
+import javax.persistence.*;
+import java.sql.Date;
+import java.util.Collection;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
 
 @Entity
 @Table(name = "person")
-public class Person {
+public class Person
+{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "person_id")
+    @Column(name = "id")
     private long id;
 
-    @Column(name = "firstname")
-    private String firstName;
+    private String name;
 
-    @Column(name = "lastname")
-    private String lastName;
+    @JsonManagedReference
+    @OneToOne(mappedBy = "person")
+    private User user;
 
-    @Column(name = "username", unique = true)
     private String username;
 
-    @Column(name = "birth_date")
-    private Date birthDate;
-
-    @Column(name = "address")
     private String address;
 
-    @Column(name = "postal_code")
+    private Date birthDate;
+
     private String postalCode;
 
-    @Column(name = "town")
     private String town;
 
-    @Column(name = "role")
-    private String role;
+    /*@ManyToOne
+    @JoinTable(name="klassenbuch_prsn",
+            joinColumns = @JoinColumn(name="klassenbuch_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id", nullable=false))
+    private Klassenbuch klassenbuch;*/
+
+    /*
+    @JsonBackReference
+    @ManyToMany(mappedBy = "persons")
+	private Collection<Role> roles;*/
+
+	/*@OneToMany(mappedBy="person")
+	private Collection<MissingAttendance> missing;
+	*/
+    
+    
+    public String getAddress() {
+        return address;
+    }
+
+    public Date getDate() {
+        return birthDate;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setDate(Date date) {
+        this.birthDate = date;
+    }
+
+    public void setPostalCode(String postal_code) {
+        this.postalCode = postal_code;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
 
     public long getId() {
         return id;
@@ -48,20 +97,12 @@ public class Person {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUsername() {
@@ -72,45 +113,39 @@ public class Person {
         this.username = username;
     }
 
-    public Date getBirthDate() {
+    /*public Klassenbuch getKlassenbuch() {
+        return klassenbuch;
+    }
+
+    public void setKlassenbuch(Klassenbuch klassenbuch) {
+        this.klassenbuch = klassenbuch;
+    }*/
+
+    /*public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }*/
+
+    public User getUser()
+    {
+        return user;
+    }
+
+    public void setUser( final User user )
+    {
+        this.user = user;
+    }
+
+    public Date getBirthDate()
+    {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(final Date birthDate)
+    {
         this.birthDate = birthDate;
     }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public String getTown() {
-        return town;
-    }
-
-    public void setTown(String town) {
-        this.town = town;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-
 }

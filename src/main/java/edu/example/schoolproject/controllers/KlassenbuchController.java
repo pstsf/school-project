@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.example.schoolproject.model.Person;
-import edu.example.schoolproject.repository.PersonRepository;
 
 @RestController
 @RequestMapping( "/klassenbuch" )
@@ -24,18 +22,18 @@ public class KlassenbuchController
 {
 
     @Autowired
-    private KlassenbuchRepository klassenbuchRepo;
+    private KlassenbuchRepository kbRepo;
 
     @RequestMapping( method = RequestMethod.GET )
-    public ResponseEntity<Collection<Klassenbuch>> getKlassenbuch()
+    public ResponseEntity<Collection<Klassenbuch>> getKlassenbuecher()
     {
-        return new ResponseEntity<>( klassenbuchRepo.findAll(), HttpStatus.OK );
+        return new ResponseEntity<>( kbRepo.findAll(), HttpStatus.OK );
     }
 
     @RequestMapping( value = "/{id}", method = RequestMethod.GET )
     public ResponseEntity<Klassenbuch> getKlassenbuch( @PathVariable long id )
     {
-        final Optional<Klassenbuch> klassenbuchOptional = klassenbuchRepo.findById( id );
+        final Optional<Klassenbuch> klassenbuchOptional = kbRepo.findById( id );
 
         if ( klassenbuchOptional.isPresent() )
         {
@@ -50,22 +48,13 @@ public class KlassenbuchController
     @RequestMapping( method = RequestMethod.POST )
     public ResponseEntity<?> addKlassenbuch( @RequestBody Klassenbuch klassenbuch )
     {
-        return new ResponseEntity<>( klassenbuchRepo.save( klassenbuch ), HttpStatus.CREATED );
+        return new ResponseEntity<>( kbRepo.save( klassenbuch ), HttpStatus.CREATED );
     }
 
     @RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
-    public ResponseEntity<Void> deleteKlassenbuch( @PathVariable long id, Principal principal )
+    public ResponseEntity<Void> deleteKlassenbuch( @PathVariable long id )
     {
-        Klassenbuch currentKlassenbuch = klassenbuchRepo.findByName( principal.getName() );
-
-        if ( currentKlassenbuch.getId() == id )
-        {
-            klassenbuchRepo.deleteById( id );
-            return new ResponseEntity<Void>( HttpStatus.OK );
-        }
-        else
-        {
-            return new ResponseEntity<Void>( HttpStatus.UNAUTHORIZED );
-        }
+        kbRepo.deleteById( id );
+        return new ResponseEntity<Void>( HttpStatus.OK );
     }
 }

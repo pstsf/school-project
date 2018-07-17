@@ -25,4 +25,6 @@ public interface UserRepository
     @Query("SELECT * FROM users u where u.username = :username")
     User searchUserByUsername(@Param("username") String username);
 
+    User deleteByUsername( String username );
+
 }
