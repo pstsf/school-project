@@ -65,7 +65,7 @@ public class PersonTests {
 
     @Test
     public void getPersonTest() {
-        ResponseEntity<Person> prsn = pc.getPerson( person1.getUsername() );
+        //ResponseEntity<Person> prsn = pc.getP( person1.getUsername() );
     }
 
     @Test
