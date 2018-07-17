@@ -19,7 +19,7 @@ CREATE TABLE users (
     person_id BIGINT REFERENCES person (id),
 );
 
-CREATE SEQUENCE hibernate_sequence START 1;
+CREATE SEQUENCE hibernate_sequence START 4;
 
 
 DROP TABLE IF EXISTS role;

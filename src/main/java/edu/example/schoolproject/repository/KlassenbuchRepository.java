@@ -15,7 +15,7 @@ public interface KlassenbuchRepository
 
     Klassenbuch findById( int id );
 
-    Klassenbuch findByKlassenName ( String name );
+    Klassenbuch findByKlassenName ( String nawme );
 
     Collection<Person> findByKlassenNameIgnoreCaseContaining(String search );
 }
