@@ -1,7 +1,9 @@
 package edu.example.schoolproject;
 
+import edu.example.schoolproject.model.Klassenbuch;
 import edu.example.schoolproject.model.Person;
 import edu.example.schoolproject.model.User;
+import edu.example.schoolproject.repository.KlassenbuchRepository;
 import edu.example.schoolproject.repository.PersonRepository;
 import edu.example.schoolproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class SchoolProjectApplication {
 	@Autowired
 	private PersonRepository personRepository;
 
+    @Autowired
+    private KlassenbuchRepository kbRepo;
+
 	@EventListener(ApplicationReadyEvent.class)
 	public void setDefaultSettings(){
 		Person person=new Person();
@@ -41,6 +46,17 @@ public class SchoolProjectApplication {
 		userRepository.save(user);
 
         person.setUser(user);
+
+        Klassenbuch klassenbuch=new Klassenbuch();
+        klassenbuch.setOwner(person);
+        klassenbuch.setArchived(false);
+        klassenbuch.setKlassen_stufe(11);
+        klassenbuch.setKlassen_zusatz("b");
+        klassenbuch.generateKlassen_name();
+
+        kbRepo.save(klassenbuch);
+
+        person.setKlassenbuch(klassenbuch);
 	}
 
 }

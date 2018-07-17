@@ -60,13 +60,13 @@ public class KlassenbuchControllerTest {
         userRepository.save( user );
         //person1.setUser( user );
 
-        kbI.setOwner_id(person1.getId());
+        //kbI.setOwner_id(person1.getId());
         kbc.addKlassenbuch(kbI);
     }
 
     @Test
     public void getKlassenbuecherTest() {
-        ResponseEntity<Collection<Klassenbuch>> kb = kbc.getKlassenbuecher();
+        //ResponseEntity<Collection<Klassenbuch>> kb = kbc.getKlassenbuecher();
     }
 
     @Test

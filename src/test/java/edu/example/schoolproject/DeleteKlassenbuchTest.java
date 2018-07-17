@@ -62,7 +62,7 @@ public class DeleteKlassenbuchTest {
         userRepository.save( user );
         //person1.setUser( user );
 
-        kbI.setOwner_id(person1.getId());
+        //kbI.setOwner_id(person1.getId());
         kbc.addKlassenbuch(kbI);
     }
 

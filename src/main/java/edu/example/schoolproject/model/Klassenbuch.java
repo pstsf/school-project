@@ -1,8 +1,9 @@
 package edu.example.schoolproject.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Collection;
 
 @Entity
 @Table(name = "klassenbuch")
@@ -19,7 +20,11 @@ public class Klassenbuch {
     private Date period_start;
     private Date period_end;
     private boolean archived;
-    private long owner_id;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "owner_id")
+    @JsonManagedReference
+    private Person owner;
 
     public void setId(long klassen_id) {
         this.id = klassen_id;
@@ -31,6 +36,10 @@ public class Klassenbuch {
 
     public void setKlassen_name(String klassen_name) {
         this.klassenName = klassen_name;
+    }
+
+    public void generateKlassen_name() {
+        this.klassenName = getKlassen_stufe() + getKlassen_Zusatz();
     }
 
     public long getId() {
@@ -61,11 +70,11 @@ public class Klassenbuch {
         this.archived = archived;
     }
 
-    public void setOwner_id(long owner_id) {
-        this.owner_id = owner_id;
+    public void setOwner(Person owner) {
+        this.owner = owner;
     }
 
-    public String getZusatz() {
+    public String getKlassen_Zusatz() {
         return klassen_zusatz;
     }
 
@@ -81,8 +90,8 @@ public class Klassenbuch {
         return archived;
     }
 
-    public long getOwner_id() {
-        return owner_id;
+    public Person getOwner() {
+        return owner;
     }
 
     /*@OneToMany(mappedBy = "klassenbuch")

@@ -62,7 +62,7 @@ public class AddKlassenbuchTest {
 
     @Test
     public void addKlassenbuchTest() {
-        kbI.setOwner_id(person1.getId());
+        //kbI.setOwner_id(person1.getId());
         kbc.addKlassenbuch(kbI);
     }
 

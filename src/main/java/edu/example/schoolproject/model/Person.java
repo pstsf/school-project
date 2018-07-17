@@ -1,5 +1,6 @@
 package edu.example.schoolproject.model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -18,6 +19,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 @Table(name = "person")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Person
 {
     @Id
@@ -27,9 +29,13 @@ public class Person
 
     private String name;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToOne(mappedBy = "person")
     private User user;
+
+    @JsonBackReference
+    @OneToOne(mappedBy = "owner")
+    private Klassenbuch klassenbuch;
 
     private String username;
 
@@ -147,5 +153,13 @@ public class Person
     public void setBirthDate(final Date birthDate)
     {
         this.birthDate = birthDate;
+    }
+
+    public Klassenbuch getKlassenbuch() {
+        return klassenbuch;
+    }
+
+    public void setKlassenbuch(Klassenbuch klassenbuch) {
+        this.klassenbuch = klassenbuch;
     }
 }
