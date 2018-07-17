@@ -6,7 +6,7 @@ CREATE TABLE users (
     enabled BOOL,
 );
 
-CREATE SEQUENCE hibernate_sequence START 1;
+CREATE SEQUENCE hibernate_sequence START 4;
 
 DROP TABLE IF EXISTS person;
 CREATE TABLE person (
