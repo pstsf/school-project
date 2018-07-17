@@ -26,16 +26,21 @@ public class SchoolProjectApplication {
 	@EventListener(ApplicationReadyEvent.class)
 	public void setDefaultSettings(){
 		Person person=new Person();
+		User user=new User();
+
 		person.setUsername("david@example.com");
+		person.setName("David Polzer");
+		person.setTown("Teststadt");
 		//person.setRoles(null);
         personRepository.save(person);
 
-		User user=new User();
 		user.setPassword("$2a$10$D4OLKI6yy68crm.3imC9X.P2xqKHs5TloWUcr6z5XdOqnTrAK84ri");
 		user.setEnabled(true);
 		user.setUsername("david@example.com");
 		user.setPerson(person);
 		userRepository.save(user);
+
+        person.setUser(user);
 	}
 
 }
