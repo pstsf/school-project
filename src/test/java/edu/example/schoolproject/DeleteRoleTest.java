@@ -58,7 +58,7 @@ public class DeleteRoleTest {
         user.setPassword( "qwrt" );
         user.setPerson( person1 );
         userRepository.save( user );
-        person1.setUser( user );
+        //person1.setUser( user );
 
         rc.addRole(role1);
     }

@@ -14,6 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -41,6 +44,7 @@ public class User
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "person_id")
+	@JsonBackReference
 	private Person person;
 
 	@Column(name = "username", nullable = false, unique = true)
@@ -53,6 +57,7 @@ public class User
 	private boolean enabled;
 
 	@Override
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 

@@ -15,7 +15,7 @@ CREATE TABLE users (
     user_id BIGINT PRIMARY KEY auto_increment,
     username VARCHAR(128) UNIQUE REFERENCES person (username),
     password VARCHAR(256),
-    enabled BOOL
+    enabled BOOLEAN,
     person_id BIGINT REFERENCES person (id),
 );
 
@@ -64,21 +64,9 @@ CREATE TABLE attendance_klassenbuch(
     kb_id BIGINT REFERENCES klassenbuch(id),
 );
 
-DROP TABLE IF EXISTS klassenbuch_prsn;
-CREATE TABLE klassenbuch_prsn(
-    klassenbuch_id BIGINT REFERENCES klassenbuch(id),
-    person_id BIGINT REFERENCES person(id)
-);
-
 DROP TABLE IF EXISTS not_attendance;
 CREATE TABLE not_attendance(
     person_id BIGINT REFERENCES person(id),
     date DATE,
-    reason VARCHAR(32),
-    klassenbuch_id BIGINT REFERENCES klassenbuch(id)
+    reason VARCHAR(32)
 );
-
-
-
-
-

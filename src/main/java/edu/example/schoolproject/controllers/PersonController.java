@@ -1,15 +1,14 @@
 package edu.example.schoolproject.controllers;
 
 import java.util.Collection;
+import java.util.Map;
 
+import edu.example.schoolproject.model.Klassenbuch;
+import edu.example.schoolproject.repository.KlassenbuchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import edu.example.schoolproject.model.Person;
 import edu.example.schoolproject.repository.PersonRepository;
@@ -21,8 +20,15 @@ public class PersonController {
     @Autowired
     private PersonRepository personRepo;
 
+    /*@Autowired
+    private KlassenbuchRepository klassenbuchRepo;*/
+
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Collection<Person>> getPeople() {
+    public ResponseEntity<Collection<Person>> getPeople(@RequestParam Map<String,String> requestParams) {
+        String search=requestParams.get("search");
+        if(search!=null&&!search.equals("")) {
+            return new ResponseEntity<>(personRepo.findByUsernameIgnoreCaseContaining(search), HttpStatus.OK);
+        }
         return new ResponseEntity<>(personRepo.findAll(), HttpStatus.OK);
     }
 
@@ -37,24 +43,42 @@ public class PersonController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addPerson(@RequestBody Person person) {
-        return new ResponseEntity<>(personRepo.save(person), HttpStatus.CREATED);
+        long id = person.getId();
+        Person person1 = personRepo.getById(id);
+        if(person1==null) {
+            return new ResponseEntity<>(personRepo.save(person), HttpStatus.CREATED);
+        }else {
+            person1.setPostalCode(person.getPostalCode());
+            person1.setTown(person.getTown());
+            person1.setAddress(person.getAddress());
+            person1.setDate(person.getDate());
+            person1.setUsername(person.getUsername());
+            person1.setUser(person.getUser());
+            person1.setName(person.getName());
+            person1.setBirthDate(person.getBirthDate());
+            return new ResponseEntity<>(personRepo.save(person1), HttpStatus.OK);
+        }
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> updatePerson(@RequestBody Person person) {
         long id = person.getId();
         Person person1 = personRepo.getById(id);
-        person1.setPostalCode(person.getPostalCode());
-        person1.setTown(person.getTown());
-        person1.setAddress(person.getAddress());
-        person1.setDate(person.getDate());
-        person1.setUsername(person.getUsername());
-        person1.setUser(person.getUser());
-        person1.setName(person.getName());
-        person1.setBirthDate(person.getBirthDate());
-        return new ResponseEntity<>(personRepo.save(person1), HttpStatus.OK);
+        if(person1==null) {
+            return new ResponseEntity<>(personRepo.save(person), HttpStatus.CREATED);
+        }else {
+            person1.setPostalCode(person.getPostalCode());
+            person1.setTown(person.getTown());
+            person1.setAddress(person.getAddress());
+            person1.setDate(person.getDate());
+            person1.setUsername(person.getUsername());
+            person1.setUser(person.getUser());
+            person1.setName(person.getName());
+            person1.setBirthDate(person.getBirthDate());
+            return new ResponseEntity<>(personRepo.save(person1), HttpStatus.OK);
+        }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

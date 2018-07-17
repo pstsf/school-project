@@ -1,5 +1,8 @@
 package edu.example.schoolproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.sql.Date;
 import java.util.Collection;
 
@@ -24,6 +27,7 @@ public class Person
 
     private String name;
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "person")
     private User user;
 
@@ -37,14 +41,20 @@ public class Person
 
     private String town;
 
-    @ManyToMany(mappedBy = "persons")
-	private Collection<Role> roles;
+    /*@ManyToOne
+    @JoinTable(name="klassenbuch_prsn",
+            joinColumns = @JoinColumn(name="klassenbuch_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id", nullable=false))
+    private Klassenbuch klassenbuch;*/
 
-	@ManyToOne
-	@JoinTable(name="klassenbuch_prsn",
-			joinColumns = @JoinColumn(name="klassenbuch_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
-	private Klassenbuch klassenbuch;
+    /*
+    @JsonBackReference
+    @ManyToMany(mappedBy = "persons")
+	private Collection<Role> roles;*/
+
+	/*@OneToMany(mappedBy="person")
+	private Collection<MissingAttendance> missing;
+	*/
     
     
     public String getAddress() {
@@ -103,21 +113,21 @@ public class Person
         this.username = username;
     }
 
-    public Klassenbuch getKlassenbuch() {
+    /*public Klassenbuch getKlassenbuch() {
         return klassenbuch;
     }
 
     public void setKlassenbuch(Klassenbuch klassenbuch) {
         this.klassenbuch = klassenbuch;
-    }
+    }*/
 
-    public Collection<Role> getRoles() {
+    /*public Collection<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
-    }
+    }*/
 
     public User getUser()
     {
@@ -138,16 +148,4 @@ public class Person
     {
         this.birthDate = birthDate;
     }
-
-    @ManyToMany(mappedBy = "persons")
-    private Collection<Role> roles;
-
-    @ManyToOne
-    @JoinTable(name="klassenbuch_prsn",
-            joinColumns = @JoinColumn(name="klassenbuch_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
-    private Klassenbuch klassenbuch;
-
-	@OneToMany(mappedBy="person")
-	private Collection<MissingAttendance> missing;
 }

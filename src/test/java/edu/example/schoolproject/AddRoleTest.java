@@ -9,6 +9,7 @@ import edu.example.schoolproject.model.User;
 import edu.example.schoolproject.repository.PersonRepository;
 import edu.example.schoolproject.repository.UserRepository;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,12 +59,15 @@ public class AddRoleTest {
         user.setPassword( "qwrt" );
         user.setPerson( person1 );
         userRepository.save( user );
-        person1.setUser( user );
+        //person1.setUser( user );
     }
 
     @Test
     public void addRoleTest() {
+        role1.setName("student");
         rc.addRole(role1);
+        ResponseEntity<Role> role = rc.getRole(role1.getId());
+        Assert.assertEquals("student", role.getBody().getName());
     }
 
     @After

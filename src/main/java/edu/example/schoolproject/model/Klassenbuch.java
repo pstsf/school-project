@@ -85,7 +85,7 @@ public class Klassenbuch {
         return owner_id;
     }
 
-    @OneToMany(mappedBy = "klassenbuch")
+    /*@OneToMany(mappedBy = "klassenbuch")
     private Collection<Person> students;
 
     public Collection<Person> getStudents() {
@@ -94,8 +94,8 @@ public class Klassenbuch {
 
     public void setStudents(Collection<Person> students) {
         this.students = students;
-    }
+    }*/
 
-    @OneToMany(mappedBy ="klassenbuch")
-    private Collection<MissingAttendance> missing;
+    /*@OneToMany(mappedBy ="klassenbuch")
+    private Collection<MissingAttendance> missing;*/
 };

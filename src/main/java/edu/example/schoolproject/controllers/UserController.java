@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import edu.example.schoolproject.model.User;
+import edu.example.schoolproject.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,9 @@ public class UserController
 
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private PersonRepository personRepo;
 
     @RequestMapping( method = RequestMethod.GET )
     public ResponseEntity<Collection<User>> getUser()
@@ -50,8 +54,11 @@ public class UserController
     @RequestMapping( method = RequestMethod.POST )
     public ResponseEntity<User> addUser( @RequestBody User user )
     {
-        //final String pass = user.getPassword();
-        //user.setPassword( encrypt(pass) );
+        final String pass = user.getPassword();
+        user.setPassword( encrypt(pass) );
+
+        user.setPerson(personRepo.findByUsername(user.getUsername()));
+
         return new ResponseEntity<>( userRepo.save( user ), HttpStatus.CREATED );
     }
 

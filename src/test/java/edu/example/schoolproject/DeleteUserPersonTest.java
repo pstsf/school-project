@@ -52,13 +52,13 @@ public class DeleteUserPersonTest {
         user.setPassword( "qwrt" );
         user.setPerson( person1 );
         userRepository.save( user );
-        person1.setUser( user );
+        //person1.setUser( user );
     }
 
     @Test
     @Transactional
     public void deletePersonTest() {
-        ResponseEntity<Void> del1 = uc.deleteUser( person1.getUser().getId() );
+        //ResponseEntity<Void> del1 = uc.deleteUser( person1.getUser().getId() );
         ResponseEntity<Void> del2 = pc.deletePerson( person1.getUsername() );
     }
 }

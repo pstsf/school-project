@@ -60,7 +60,7 @@ public class DeleteKlassenbuchTest {
         user.setPassword( "qwrt" );
         user.setPerson( person1 );
         userRepository.save( user );
-        person1.setUser( user );
+        //person1.setUser( user );
 
         kbI.setOwner_id(person1.getId());
         kbc.addKlassenbuch(kbI);

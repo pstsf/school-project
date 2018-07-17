@@ -1,5 +1,8 @@
 package edu.example.schoolproject.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -12,6 +15,7 @@ public class Role {
     private long id;
     private String name;
 
+    @JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="role_person",
             joinColumns = @JoinColumn(name = "role_id",referencedColumnName = "id"),
