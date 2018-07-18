@@ -96,8 +96,8 @@ public class UserController
             User byUsername = userRepo.findOneByUsername(username);
 
             userRepo.delete(byUsername);
-            return new ResponseEntity<Void>(HttpStatus.OK);
         }
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     public String encrypt(String pass) {
