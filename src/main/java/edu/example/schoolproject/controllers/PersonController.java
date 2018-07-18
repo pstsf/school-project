@@ -156,7 +156,7 @@ public class PersonController {
             Person byUsername = personRepo.findByUsername(username);
 
             personRepo.delete(byUsername);
-            return new ResponseEntity<Void>(HttpStatus.OK);
         }
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }
