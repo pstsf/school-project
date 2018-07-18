@@ -104,21 +104,24 @@ public class PersonController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addPerson(@RequestBody Person person) {
-        long id = person.getId();
-        Person person1 = personRepo.getById(id);
-        if(person1==null) {
-            return new ResponseEntity<>(personRepo.save(person), HttpStatus.CREATED);
-        }else {
-            person1.setPostalCode(person.getPostalCode());
-            person1.setTown(person.getTown());
-            person1.setAddress(person.getAddress());
-            person1.setDate(person.getDate());
-            person1.setUsername(person.getUsername());
-            person1.setUser(person.getUser());
-            //person1.setName(person.getName());
-            person1.setBirthDate(person.getBirthDate());
-            return new ResponseEntity<>(personRepo.save(person1), HttpStatus.OK);
+        Long id = person.getId();
+        if(id!=null){
+            Person person1 = personRepo.getById(id);
+            if(person1==null) {
+                return new ResponseEntity<>(personRepo.save(person), HttpStatus.CREATED);
+            }else {
+                person1.setPostalCode(person.getPostalCode());
+                person1.setTown(person.getTown());
+                person1.setAddress(person.getAddress());
+                person1.setDate(person.getDate());
+                person1.setUsername(person.getUsername());
+                person1.setUser(person.getUser());
+                //person1.setName(person.getName());
+                person1.setBirthDate(person.getBirthDate());
+                return new ResponseEntity<>(personRepo.save(person1), HttpStatus.OK);
+            }
         }
+        return new ResponseEntity<>(personRepo.save(person), HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
