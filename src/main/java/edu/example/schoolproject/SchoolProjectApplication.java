@@ -38,7 +38,7 @@ public class SchoolProjectApplication {
 		person.setLastName("Polzer");
 		person.setTown("Teststadt");
 		//person.setRoles(null);
-        personRepository.save(person);
+        	personRepository.save(person);
 
 		user.setPassword("$2a$10$D4OLKI6yy68crm.3imC9X.P2xqKHs5TloWUcr6z5XdOqnTrAK84ri");
 		user.setEnabled(true);
@@ -46,18 +46,18 @@ public class SchoolProjectApplication {
 		user.setPerson(person);
 		userRepository.save(user);
 
-        person.setUser(user);
+		person.setUser(user);
 
-        Klassenbuch klassenbuch=new Klassenbuch();
-        klassenbuch.setOwner(person);
-        klassenbuch.setArchived(false);
-        klassenbuch.setKlassen_stufe(11);
-        klassenbuch.setKlassen_zusatz("b");
-        klassenbuch.generateKlassen_name();
+		Klassenbuch klassenbuch=new Klassenbuch();
+		klassenbuch.setOwner(person);
+		klassenbuch.setArchived(false);
+		klassenbuch.setKlassen_stufe(11);
+		klassenbuch.setKlassen_zusatz("b");
+		klassenbuch.generateKlassen_name();
 
-        kbRepo.save(klassenbuch);
+		kbRepo.save(klassenbuch);
 
-        person.setKlassenbuch(klassenbuch);
+		person.setKlassenbuch(klassenbuch);
 	}
 
 }
