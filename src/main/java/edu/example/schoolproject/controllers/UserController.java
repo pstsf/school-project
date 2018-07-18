@@ -48,6 +48,11 @@ public class UserController
             }
             return new ResponseEntity<>(temp, HttpStatus.OK);
         }
+        
+        String search=requestParams.get("search");
+        if(search!=null&&!search.equals("")) {
+            return new ResponseEntity<>(userRepo.findByUsernameIgnoreCaseContaining(search), HttpStatus.OK);
+        }
 
         return new ResponseEntity( userRepo.findAll(), HttpStatus.OK );
     }
