@@ -93,7 +93,7 @@ public class UserController
     public ResponseEntity<Void> deleteUser(@RequestParam Map<String,String> requestParams) {
         String username=requestParams.get("username");
         if(username!=null&&!username.equals("")) {
-            User byUsername = userRepo.findByUsername(username);
+            User byUsername = userRepo.findOneByUsername(username);
 
             userRepo.delete(byUsername);
             return new ResponseEntity<Void>(HttpStatus.OK);
