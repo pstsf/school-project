@@ -42,7 +42,7 @@ public class RoleControllerTest {
     public void setUp() throws Exception {
         final String username = "asdfjkl";
 
-        person1.setName( "Klaus Kleber" );
+        //person1.setName( "Klaus Kleber" );
         person1.setUsername( username );
         person1.setDate( new java.sql.Date( 1999 ) );
         person1.setAddress( "Lebertranweg 4" );

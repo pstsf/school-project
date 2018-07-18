@@ -44,7 +44,7 @@ public class DeleteRoleTest {
 
     @Before
     public void setUp() throws Exception {
-        final String username = "asdfjkl";
+        /*final String username = "asdfjkl";
 
         person1.setName( "Klaus Kleber" );
         person1.setUsername( username );
@@ -60,7 +60,7 @@ public class DeleteRoleTest {
         userRepository.save( user );
         //person1.setUser( user );
 
-        rc.addRole(role1);
+        rc.addRole(role1);*/
     }
 
     @Test

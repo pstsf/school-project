@@ -1,7 +1,8 @@
 DROP TABLE IF EXISTS person;
 CREATE TABLE person (
     id BIGINT PRIMARY KEY auto_increment,
-    name VARCHAR(32),
+    firstName VARCHAR(32),
+    lastName VARCHAR(32),
     username VARCHAR(128) UNIQUE,
     birth_date DATE,
     address VARCHAR(64),

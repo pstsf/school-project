@@ -27,7 +27,8 @@ public class Person
     @Column(name = "id")
     private long id;
 
-    private String name;
+    private String firstName;
+    private String lastName;
 
     @JsonBackReference
     @OneToOne(mappedBy = "person")
@@ -103,12 +104,20 @@ public class Person
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getUsername() {

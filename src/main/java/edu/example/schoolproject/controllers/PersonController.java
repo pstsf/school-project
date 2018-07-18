@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import edu.example.schoolproject.model.Klassenbuch;
 import edu.example.schoolproject.repository.KlassenbuchRepository;
@@ -30,7 +31,18 @@ public class PersonController {
         String username=requestParams.get("username");
         if(username!=null&&!username.equals("")) {
             ArrayList<Person> temp=new ArrayList<Person>();
-            temp.add(personRepo.findByUsername(username));
+            if(personRepo.findByUsername(username)!=null) {
+                temp.add(personRepo.findByUsername(username));
+            }
+            return new ResponseEntity<>(temp, HttpStatus.OK);
+        }
+
+        String id=requestParams.get("id");
+        if(id!=null&&!id.equals("")) {
+            ArrayList<Person> temp=new ArrayList<Person>();
+            if(personRepo.findById(Long.valueOf(id)).isPresent()) {
+                temp.add(personRepo.findById(Long.valueOf(id)).get());
+            }
             return new ResponseEntity<>(temp, HttpStatus.OK);
         }
 
@@ -38,6 +50,44 @@ public class PersonController {
         if(search!=null&&!search.equals("")) {
             return new ResponseEntity<>(personRepo.findByUsernameIgnoreCaseContaining(search), HttpStatus.OK);
         }
+
+        String searchname=requestParams.get("searchname");
+        searchname.replace("  "," ");
+
+        if(searchname!=null&&!searchname.equals("")) {
+
+            String searchfirstname = null;
+            String searchlastname = null;
+
+            if(searchname.contains(" ")){
+                String[] temp = searchname.split(Pattern.quote(" "));
+
+                if(temp.length==2) {
+                    searchfirstname =temp[0];
+                    searchlastname = temp[1];
+                }
+
+                if(temp.length==3) {
+                    searchfirstname =temp[0]+temp[1];
+                    searchlastname = temp[2];
+                }
+
+                if (searchfirstname != null && !searchfirstname.equals("")) {
+                    if (searchlastname != null && !searchlastname.equals("")) {
+                        return new ResponseEntity<>(personRepo.findByFirstNameAndLastNameIgnoreCaseContaining(searchfirstname, searchlastname), HttpStatus.OK);
+                    } else {
+                        return new ResponseEntity<>(personRepo.findByFirstNameIgnoreCaseContainingOrLastNameIgnoreCaseContaining(searchfirstname, searchfirstname), HttpStatus.OK);
+                    }
+                } else {
+                    if (searchlastname != null && !searchlastname.equals("")) {
+                        return new ResponseEntity<>(personRepo.findByFirstNameIgnoreCaseContainingOrLastNameIgnoreCaseContaining(searchlastname, searchlastname), HttpStatus.OK);
+                    }
+                }
+            }
+
+            return new ResponseEntity<>(personRepo.findByFirstNameIgnoreCaseContainingOrLastNameIgnoreCaseContaining(searchname, searchname), HttpStatus.OK);
+        }
+
         return new ResponseEntity<>(personRepo.findAll(), HttpStatus.OK);
     }
 
@@ -65,7 +115,7 @@ public class PersonController {
             person1.setDate(person.getDate());
             person1.setUsername(person.getUsername());
             person1.setUser(person.getUser());
-            person1.setName(person.getName());
+            //person1.setName(person.getName());
             person1.setBirthDate(person.getBirthDate());
             return new ResponseEntity<>(personRepo.save(person1), HttpStatus.OK);
         }
@@ -84,7 +134,7 @@ public class PersonController {
             person1.setDate(person.getDate());
             person1.setUsername(person.getUsername());
             person1.setUser(person.getUser());
-            person1.setName(person.getName());
+            //person1.setName(person.getName());
             person1.setBirthDate(person.getBirthDate());
             return new ResponseEntity<>(personRepo.save(person1), HttpStatus.OK);
         }

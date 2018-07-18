@@ -1,7 +1,9 @@
 package edu.example.schoolproject.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 
 import edu.example.schoolproject.model.User;
@@ -10,11 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import edu.example.schoolproject.model.Person;
 import edu.example.schoolproject.repository.UserRepository;
@@ -31,8 +29,26 @@ public class UserController
     private PersonRepository personRepo;
 
     @RequestMapping( method = RequestMethod.GET )
-    public ResponseEntity<Collection<User>> getUser()
+    public ResponseEntity<Collection<User>> getUser(@RequestParam Map<String,String> requestParams)
     {
+        String username=requestParams.get("username");
+        if(username!=null&&!username.equals("")) {
+            ArrayList<User> temp=new ArrayList<User>();
+            if(userRepo.findOneByUsername(username)!=null) {
+                temp.add(userRepo.findOneByUsername(username));
+            }
+            return new ResponseEntity<>(temp, HttpStatus.OK);
+        }
+
+        String id=requestParams.get("id");
+        if(id!=null&&!id.equals("")) {
+            ArrayList<User> temp=new ArrayList<User>();
+            if(userRepo.findById(Long.valueOf(id)).isPresent()) {
+                temp.add(userRepo.findById(Long.valueOf(id)).get());
+            }
+            return new ResponseEntity<>(temp, HttpStatus.OK);
+        }
+
         return new ResponseEntity( userRepo.findAll(), HttpStatus.OK );
     }
 

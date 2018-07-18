@@ -20,6 +20,10 @@ public interface PersonRepository
 
 	Collection<Person> findByUsernameIgnoreCaseContaining( String username );
 
+	Collection<Person> findByFirstNameAndLastNameIgnoreCaseContaining( String firstName, String lastName );
+
+	Collection<Person> findByFirstNameIgnoreCaseContainingOrLastNameIgnoreCaseContaining( String firstName, String lastName );
+
 	Person getById( long id );
 
 }

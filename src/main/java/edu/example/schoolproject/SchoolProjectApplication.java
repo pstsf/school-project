@@ -34,7 +34,8 @@ public class SchoolProjectApplication {
 		User user=new User();
 
 		person.setUsername("david@example.com");
-		person.setName("David Polzer");
+		person.setFirstName("David");
+		person.setLastName("Polzer");
 		person.setTown("Teststadt");
 		//person.setRoles(null);
         personRepository.save(person);

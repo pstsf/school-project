@@ -43,7 +43,7 @@ public class AddKlassenbuchTest {
 
     @Before
     public void setUp() throws Exception {
-        final String username = "asdfjkl";
+        /*final String username = "asdfjkl";
 
         person1.setName( "Klaus Kleber" );
         person1.setUsername( username );
@@ -57,7 +57,7 @@ public class AddKlassenbuchTest {
         user.setPassword( "qwrt" );
         user.setPerson( person1 );
         userRepository.save( user );
-        //person1.setUser( user );
+        //person1.setUser( user );*/
     }
 
     @Test

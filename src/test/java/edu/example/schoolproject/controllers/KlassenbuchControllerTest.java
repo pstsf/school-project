@@ -44,7 +44,7 @@ public class KlassenbuchControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        final String username = "asdfjkl";
+        /*final String username = "asdfjkl";
 
         person1.setName( "Klaus Kleber" );
         person1.setUsername( username );
@@ -61,7 +61,7 @@ public class KlassenbuchControllerTest {
         //person1.setUser( user );
 
         //kbI.setOwner_id(person1.getId());
-        kbc.addKlassenbuch(kbI);
+        kbc.addKlassenbuch(kbI);*/
     }
 
     @Test
