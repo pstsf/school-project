@@ -148,4 +148,15 @@ public class PersonController {
         return new ResponseEntity<Void>(HttpStatus.OK);
 
     }
+    
+    @RequestMapping(method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deletePerson(@RequestParam Map<String,String> requestParams) {
+        String username=requestParams.get("username");
+        if(username!=null&&!username.equals("")) {
+            Person byUsername = personRepo.findByUsername(username);
+
+            personRepo.delete(byUsername);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        }
+    }
 }
