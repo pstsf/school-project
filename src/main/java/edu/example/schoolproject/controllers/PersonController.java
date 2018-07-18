@@ -52,9 +52,9 @@ public class PersonController {
         }
 
         String searchname=requestParams.get("searchname");
-        searchname.replace("  "," ");
 
         if(searchname!=null&&!searchname.equals("")) {
+            searchname=searchname.replace("  "," ");
 
             String searchfirstname = null;
             String searchlastname = null;
